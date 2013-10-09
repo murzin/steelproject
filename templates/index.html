@@ -1,4 +1,6 @@
 {%  extends 'base.html' %}
 {% block content %}
-Main page
+{% for question in object_list %}
+    <li>{{ question.caption }}</li>
+{% endfor %}
 {% endblock %}
