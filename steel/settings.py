@@ -5,7 +5,7 @@ TEMPLATE_CONTEXT_PROCESSORS += (
     'django.core.context_processors.request',
 )
 PROJECT_ROOT = os.path.realpath(os.path.join(os.path.dirname(__file__), '..'))
-
+SITE_URL = 'http://localhost:8000'
 
 def get_abs_path(*parts):
 	return os.path.join(PROJECT_ROOT, *parts)

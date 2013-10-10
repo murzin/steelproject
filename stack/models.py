@@ -1,6 +1,11 @@
+# -*- coding: utf-8 -*-
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.core.mail import send_mail
+from django.conf import settings
 
 
 class Question(models.Model):
@@ -24,3 +29,10 @@ class Comment(models.Model):
 
 	def __unicode__(self):
 		return self.author
+
+
+@receiver(post_save, sender=Comment)
+def send_new_comment_mail(sender, instance, **kwargs):
+	message = u'Ваш вопрос:\n {0}\nТекст комментария:\n{1}\n{2}'.format(instance.question.text, instance.text,
+											settings.SITE_URL + reverse('question_detail', kwargs={'pk': instance.question.pk}))
+	send_mail(u'Новый комментарий', message, "info@ex.com", [instance.question.author.email] )
