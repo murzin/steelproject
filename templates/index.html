@@ -1,6 +1,6 @@
 {%  extends 'base.html' %}
 {% block content %}
 {% for question in object_list %}
-    <li>{{ question.caption }}</li>
+    <li><a href="{% url 'question_detail' question.pk %}"> {{ question.caption }} </a></li>
 {% endfor %}
 {% endblock %}

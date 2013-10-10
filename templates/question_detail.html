@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+    {{ question.caption }}
+    <br>
+    {{ question.text }}
+    {% for comment in question.comments.all %}
+        {{ comment.text }} <br>
+    {% endfor %}
+    {% include 'form.html' %}
+{% endblock %}
