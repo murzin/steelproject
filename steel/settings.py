@@ -1,6 +1,9 @@
 # Django settings for steel project.
 import os
-
+from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
+TEMPLATE_CONTEXT_PROCESSORS += (
+    'django.core.context_processors.request',
+)
 PROJECT_ROOT = os.path.realpath(os.path.join(os.path.dirname(__file__), '..'))
 
 
@@ -134,6 +137,7 @@ INSTALLED_APPS = (
 	'south',
 	'registration',
 	'stack',
+	'endless_pagination'
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'

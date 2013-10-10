@@ -1,6 +1,11 @@
 {%  extends 'base.html' %}
+{% load endless %}
 {% block content %}
+{% paginate object_list %}
 {% for question in object_list %}
-    <li><a href="{% url 'question_detail' question.pk %}"> {{ question.caption }} </a></li>
+    <a href="{% url 'question_detail' question.pk %}"> {{ question.caption }} </a> <br>
+    {{ question.author.username }} {{ question.timestamp }} <br>
+    {{ question.text| truncatechars:100 }}<br><br><br>
 {% endfor %}
+{% show_pages %}
 {% endblock %}
