@@ -1,4 +1,4 @@
-<form method="post" action="">
+<form method="post" action="{{ form_action }}">
     {% csrf_token %}
     <dl class="comment_add">
     {% for field in form %}

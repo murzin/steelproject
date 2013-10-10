@@ -8,13 +8,14 @@
     <li>
         <a href="{% url 'index' %}">На главную</a>
         {% if user.is_authenticated %}
-            <a href="{% url 'auth_logout' %}">Logout</a>
             <a href="{% url 'question_add' %}">Задать вопрос</a>
+            <a href="{% url 'auth_logout' %}">Logout</a>
         {% else %}
-            <a href="{% url 'registration_register' %}">Sign Up</a>
+            <a href="{% url 'auth_login' %}">Login</a>
+
     </li>
     <li>
-            <a href="{% url 'auth_login' %}">Login</a>
+            <a href="{% url 'registration_register' %}">Sign Up</a>
         {% endif %}
     </li>
 </ul>
