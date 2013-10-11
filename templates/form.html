@@ -1,6 +1,6 @@
-<form method="post" action="{{ form_action }}">
+<form method="post" action="">
     {% csrf_token %}
-    <dl class="comment_add">
+    <dl class="">
     {% for field in form %}
         <dt>{{ field.label_tag }}</dt>
         <dd class="clearfix">{{ field }}

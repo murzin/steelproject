@@ -2,10 +2,14 @@
 import os
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
 TEMPLATE_CONTEXT_PROCESSORS += (
-    'django.core.context_processors.request',
+	'django.core.context_processors.request',
+	'social_auth.context_processors.social_auth_by_type_backends',
 )
 PROJECT_ROOT = os.path.realpath(os.path.join(os.path.dirname(__file__), '..'))
 SITE_URL = 'http://localhost:8000'
+AUTHENTICATION_BACKENDS = ('social_auth.backends.facebook.FacebookBackend',
+							'django.contrib.auth.backends.ModelBackend',
+)
 
 def get_abs_path(*parts):
 	return os.path.join(PROJECT_ROOT, *parts)
@@ -137,10 +141,11 @@ INSTALLED_APPS = (
 	'south',
 	'registration',
 	'stack',
-	'endless_pagination'
+	'endless_pagination',
+	'social_auth'
 )
 
-SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
+#SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
@@ -180,6 +185,20 @@ EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_TLS = False
 DEFAULT_FROM_EMAIL = 'info@google.ru'
 
-LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/login/'
 LOGOUT_URL = '/logout/'
+LOGIN_REDIRECT_URL = '/'
+LOGIN_ERROR_URL = '/login-error/'
+
+#social
+SOCIAL_AUTH_DEFAULT_USERNAME = 'new_social_auth_user'
+SOCIAL_AUTH_UID_LENGTH = 16
+SOCIAL_AUTH_ASSOCIATION_HANDLE_LENGTH = 16
+SOCIAL_AUTH_NONCE_SERVER_URL_LENGTH = 16
+SOCIAL_AUTH_ASSOCIATION_SERVER_URL_LENGTH = 16
+SOCIAL_AUTH_ASSOCIATION_HANDLE_LENGTH = 16
+
+SOCIAL_AUTH_ENABLED_BACKENDS = ('facebook',)
+FACEBOOK_APP_ID              = '210405772464133'
+FACEBOOK_API_SECRET          = '7b36691698eeb202e69d289f4b7e8ef3'
+FACEBOOK_EXTENDED_PERMISSIONS = ['email']
