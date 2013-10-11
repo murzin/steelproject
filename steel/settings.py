@@ -18,7 +18,7 @@ def get_abs_path(*parts):
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
-
+SOUTH_TESTS_MIGRATE = False
 ADMINS = (
 # ('Your Name', 'your_email@example.com'),
 )
