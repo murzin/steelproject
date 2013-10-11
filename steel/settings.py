@@ -11,6 +11,7 @@ AUTHENTICATION_BACKENDS = ('social_auth.backends.facebook.FacebookBackend',
 							'django.contrib.auth.backends.ModelBackend',
 )
 
+
 def get_abs_path(*parts):
 	return os.path.join(PROJECT_ROOT, *parts)
 
@@ -175,7 +176,7 @@ LOGGING = {
 		},
 	}
 }
-
+#django registration and email send
 ACCOUNT_ACTIVATION_DAYS = 2
 AUTH_USER_EMAIL_UNIQUE = True
 EMAIL_HOST = 'localhost'

@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, url
-from django.views.generic import TemplateView, ListView
-from views import QuestionCreate, QuestionDetail #CommentCreate
+from django.views.generic import ListView
+from views import QuestionCreate, QuestionDetail
 from models import Question
 
 urlpatterns = patterns('',
