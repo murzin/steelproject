@@ -5,10 +5,14 @@ from django.core import mail
 import re
 from django.contrib.auth.models import User
 from models import Question, Comment
+from django.contrib.sites.models import Site
 
 
 class SimpleTest(TestCase):
 	def setUp(self):
+		self.site = Site.objects.all()[0]
+		self.site.domain = 'localhost:8000'
+		self.site.save()
 		self.u1 = User.objects.create_user(username='user1', email='u1@mail.com', password='password')
 		self.u2 = User.objects.create_user(username='user2', email='u2@mail.com', password='password')
 		self.question1 = Question.objects.create(caption='Caption1', text='text1', author=self.u1)
@@ -35,7 +39,7 @@ class SimpleTest(TestCase):
 		)
 		self.assertEqual(response.status_code, 200)
 		self.assertContains(response, u'На ваш e-mail отправлен код подтверждения.')
-		self.assertEqual(mail.outbox[-1].subject, u'Активация аккаунта – example.com')
+		self.assertEqual(u'Активация аккаунта' in mail.outbox[-1].subject, True)
 		urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', mail.outbox[-1].body)
 		response = self.client.get(urls[0], follow=True)
 		self.assertContains(response, u'Ваша учетная запись активирована.')
@@ -81,6 +85,22 @@ class SimpleTest(TestCase):
 		self.assertEqual(len(Comment.objects.filter(text=u'Тестовый текст')),1)
 		''' Signal test'''
 		self.assertEqual(u'Тестовый текст' in mail.outbox[-1].body, True)
+
+	def test_password_reset(self):
+		response = self.client.post(reverse('auth_password_reset'), {'email': self.u2.email}, follow=True)
+		self.assertContains(response, u'Инуструкции по смене пароля высланы в письме')
+		urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', mail.outbox[-1].body)
+		response = self.client.post(urls[0], {'new_password1': '1', 'new_password2': '1'}, follow=True)
+		self.assertContains(response, u'Пароль изменен')
+		self.client.login(username='user2', password='1')
+		self.assertEqual(self.client.session['_auth_user_id'], self.u2.pk)
+
+	def test_logout(self):
+		self.client.login(username='user1', password='password')
+		self.client.get(reverse('auth_logout'))
+		self.assertNotIn('_auth_user_id', self.client.session)
+
+
 
 
 

@@ -8,6 +8,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.utils.timezone import utc
 from datetime import datetime
+from django.contrib.sites.models import Site
 
 
 class Question(models.Model):
@@ -36,5 +37,5 @@ class Comment(models.Model):
 @receiver(post_save, sender=Comment)
 def send_new_comment_mail(sender, instance, **kwargs):
 	message = u'Ваш вопрос:\n {0}\nТекст комментария:\n{1}\n{2}'.format(instance.question.text, instance.text,
-											settings.SITE_URL + reverse('question_detail', kwargs={'pk': instance.question.pk}))
+											'http://' + Site.objects.all()[0].domain + reverse('question_detail', kwargs={'pk': instance.question.pk}))
 	send_mail(u'Новый комментарий', message, "info@ex.com", [instance.question.author.email] )
