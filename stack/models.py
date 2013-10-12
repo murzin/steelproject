@@ -6,12 +6,14 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.core.mail import send_mail
 from django.conf import settings
+from django.utils.timezone import utc
+from datetime import datetime
 
 
 class Question(models.Model):
 	caption = models.CharField(max_length=100)
 	text = models.TextField()
-	timestamp = models.DateTimeField()
+	timestamp = models.DateTimeField(default=datetime.utcnow().replace(tzinfo=utc))
 	author = models.ForeignKey(User)
 
 	def get_absolute_url(self):
@@ -23,7 +25,7 @@ class Question(models.Model):
 
 class Comment(models.Model):
 	text = models.TextField()
-	timestamp = models.DateTimeField()
+	timestamp = models.DateTimeField(default=datetime.utcnow().replace(tzinfo=utc))
 	author = models.ForeignKey(User)
 	question = models.ForeignKey(Question, related_name='comments')
 

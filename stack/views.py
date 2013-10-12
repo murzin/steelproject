@@ -15,7 +15,6 @@ class QuestionCreate(CreateView):
 
 	def form_valid(self, form):
 		form.instance.author = self.request.user
-		form.instance.timestamp = datetime.now()
 		return super(QuestionCreate, self).form_valid(form)
 
 	@method_decorator(login_required)
@@ -30,7 +29,6 @@ class QuestionDetail(CreateView):
 
 	def form_valid(self, form):
 		form.instance.author = self.request.user
-		form.instance.timestamp = datetime.now()
 		form.instance.question = get_object_or_404(Question, pk=self.kwargs['pk'])
 		return super(QuestionDetail, self).form_valid(form)
 
