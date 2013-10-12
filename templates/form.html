@@ -3,13 +3,12 @@
 
     {% for field in form %}
         <div class="form-group {% if field.errors %}has-error{% endif %}">
-        {{ field.label_tag }}
-        {% for error in field.errors %}
-            <label class="control-label" for="{{ field.name }}">{{ error }}</label>
-        {% endfor %}
-        {{ field }}
-        {% if field.help_text %}<span class="help-block">{{ field.help_text }}</span>{% endif %}
-
+            {{ field.label_tag }}
+            {% for error in field.errors %}
+                <label class="control-label" for="{{ field.name }}">{{ error }}</label>
+            {% endfor %}
+            {{ field }}
+            {% if field.help_text %}<span class="help-block">{{ field.help_text }}</span>{% endif %}
         </div>
     {% endfor %}
     <input type="submit" value="Отправить"  class="btn btn-default">

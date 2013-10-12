@@ -30,7 +30,7 @@ class Question(models.Model):
 
 
 class Comment(models.Model):
-	text = models.TextField()
+	text = models.TextField(verbose_name=_(u"Текст комментария"))
 	timestamp = models.DateTimeField(default=datetime.utcnow().replace(tzinfo=utc))
 	author = models.ForeignKey(User)
 	question = models.ForeignKey(Question, related_name='comments')

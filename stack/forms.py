@@ -7,8 +7,8 @@ class QuestionForm(ModelForm):
 		model = Question
 		exclude = ('author', 'timestamp',)
 		widgets = {
-			"caption": forms.TextInput(attrs={'class':'form-control'}),
-			"text": forms.Textarea(attrs={'class':'form-control'})
+			"caption": forms.TextInput(attrs={'class': 'form-control'}),
+			"text": forms.Textarea(attrs={'class': 'form-control'})
 		}
 
 
@@ -16,3 +16,6 @@ class CommentForm(ModelForm):
 	class Meta:
 		model = Comment
 		exclude = ('author', 'timestamp', 'question')
+		widgets = {
+			"text": forms.Textarea(attrs={'class': 'form-control'})
+		}

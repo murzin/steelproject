@@ -1,7 +1,5 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Авторизация</h1>
-
 {% if user.is_authenticated %}
 Что такое, {{ user.username }}? Вы же уже авторизорваны. 
 {% else %}
@@ -13,7 +11,12 @@
 {% include 'form.html' %}
     
 <script type="text/javascript">
-    document.getElementById('id_username').focus()
+    document.getElementById('id_username').focus();
+{#    var inputs = document.getElementsByTagName('input');#}
+{#    for (var index = 0; index < inputs.length; ++index) {#}
+{#        inputs[index].classList.add('form-control');#}
+{#    }#}
+
 </script>
 
  <br/><br/>
