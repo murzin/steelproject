@@ -1,13 +1,16 @@
 <form method="post" action="">
     {% csrf_token %}
-    <dl class="">
+
     {% for field in form %}
-        <dt>{{ field.label_tag }}</dt>
-        <dd class="clearfix">{{ field }}
-        {% if field.help_text %}<div class="clearfix">{{ field.help_text }}</div>{% endif %}
-        {% if field.errors %}<div class="myerrors clearfix">{{ field.errors }}</div>{% endif %}
-        </dd>
+        <div class="form-group {% if field.errors %}has-error{% endif %}">
+        {{ field.label_tag }}
+        {% for error in field.errors %}
+            <label class="control-label" for="{{ field.name }}">{{ error }}</label>
+        {% endfor %}
+        {{ field }}
+        {% if field.help_text %}<span class="help-block">{{ field.help_text }}</span>{% endif %}
+
+        </div>
     {% endfor %}
-    </dl>
-    <input type="submit" value="Отправить"  class="clearfix">
+    <input type="submit" value="Отправить"  class="btn btn-default">
 </form>

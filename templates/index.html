@@ -2,10 +2,19 @@
 {% load endless %}
 {% block content %}
 {% paginate object_list %}
-{% for question in object_list %}
-    <a href="{% url 'question_detail' question.pk %}"> {{ question.caption }} </a> <br>
-    {{ question.author.username }} {{ question.timestamp }} <br>
-    {{ question.text| truncatechars:100 }}<br><br><br>
-{% endfor %}
-{% show_pages %}
+<div class="row">
+    {% for question in object_list %}
+        <div class="col-lg-12">
+            <h4>
+                <a href="{% url 'question_detail' question.pk %}"> {{ question.caption }} </a>
+            </h4>
+            <p>{{ question.text| truncatechars:100 }}</p>
+            <i style="font-size: 12px;">{{ question.author.username }} {{ question.timestamp|date:"d/m/Y H:i" }}</i>
+            <div style="border-bottom: 1px inset lightgrey;"></div>
+        </div>
+    {% endfor %}
+</div>
+<ul class="pagination">
+    {% show_pages %}
+</ul>
 {% endblock %}

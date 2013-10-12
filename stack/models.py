@@ -1,27 +1,32 @@
 # -*- coding: utf-8 -*-
+from datetime import datetime
+
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.core.mail import send_mail
-from django.conf import settings
 from django.utils.timezone import utc
-from datetime import datetime
 from django.contrib.sites.models import Site
+from django.utils.translation import ugettext_lazy as _
 
 
 class Question(models.Model):
-	caption = models.CharField(max_length=100)
-	text = models.TextField()
-	timestamp = models.DateTimeField(default=datetime.utcnow().replace(tzinfo=utc))
-	author = models.ForeignKey(User)
+	caption = models.CharField(max_length=100, verbose_name=_(u"Тема"))
+	text = models.TextField(verbose_name=_(u"Текст"))
+	timestamp = models.DateTimeField(default=datetime.utcnow().replace(tzinfo=utc), verbose_name=_(u"Время"))
+	author = models.ForeignKey(User, verbose_name=_(u"Автор"))
 
 	def get_absolute_url(self):
 		return reverse('question_detail', kwargs={'pk': self.pk})
 
 	def __unicode__(self):
 		return self.caption
+
+	class Meta:
+		verbose_name = _(u"Вопрос")
+		verbose_name_plural = _(u"Вопросы")
 
 
 class Comment(models.Model):
@@ -32,6 +37,11 @@ class Comment(models.Model):
 
 	def __unicode__(self):
 		return self.author
+
+	class Meta:
+		verbose_name = _(u"Комментарий")
+		verbose_name_plural = _(u"Комментарии")
+
 
 
 @receiver(post_save, sender=Comment)
