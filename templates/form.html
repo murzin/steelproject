@@ -13,3 +13,11 @@
     {% endfor %}
     <input type="submit" value="Отправить"  class="btn btn-default">
 </form>
+<script type="text/javascript">
+    var inputs = document.getElementsByTagName('input');
+    for(var i = 0; i < inputs.length; ++i) {
+        if(inputs[i].type != "submit") {
+          inputs[i].classList.add('form-control');
+        }
+    }
+</script>

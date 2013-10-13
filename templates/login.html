@@ -9,17 +9,6 @@
 {% endif %}
 
 {% include 'form.html' %}
-    
-<script type="text/javascript">
-    document.getElementById('id_username').focus();
-{#    var inputs = document.getElementsByTagName('input');#}
-{#    for (var index = 0; index < inputs.length; ++index) {#}
-{#        inputs[index].classList.add('form-control');#}
-{#    }#}
-
-</script>
-
- <br/><br/>
     <a href="{% url 'auth_password_reset' %}">Забыли пароль?</a><br>
     <a href="{% url 'registration_register' %}">Регистрация</a><br>
     <a href="{% url 'socialauth_begin' 'facebook' %}">Войти через Facebook</a><br>

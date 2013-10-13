@@ -43,7 +43,6 @@ class Comment(models.Model):
 		verbose_name_plural = _(u"Комментарии")
 
 
-
 @receiver(post_save, sender=Comment)
 def send_new_comment_mail(sender, instance, **kwargs):
 	message = u'Ваш вопрос:\n {0}\nТекст комментария:\n{1}\n{2}'.format(instance.question.text, instance.text,
